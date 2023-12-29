@@ -1,0 +1,16 @@
+
+$control-border-width: 2px;
+$input-border-color: transparent;
+$input-shadow: none;
+
+// Global Styles
+
+html, body {
+    height: 100%;
+}
+
+html {
+    background-image: url("https://trianglify.io/p/w:1440!h:900!x:random!v:0.287!c:0.262!s:347nbm!f:sp!i:0.30") !important;
+    background-size: cover;
+    overflow-y: auto !important;
+}

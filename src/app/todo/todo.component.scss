@@ -1,0 +1,195 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.app-name {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.gradient-text {
+  background: -webkit-linear-gradient(#13f7f4, #2af598);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 0;
+  min-width: 0;
+  background-size: cover;
+  background-attachment: fixed;
+
+  .board-wrapper {
+    display: flex;
+    flex-grow: 1;
+    overflow-x: auto;
+
+    .board-columns {
+      display: flex;
+      flex-grow: 1;
+
+      .board-column {
+        display: flex;
+        flex-direction: column;
+        background: rgba($color: white, $alpha: 0.3);
+        flex-grow: 1;
+        flex-basis: 0;
+        max-width: 300px;
+        min-width: 300px;
+        overflow-y: auto;
+        margin: 20px;
+        padding: 15px;
+        border-radius: 0.4rem;
+
+        &:not(:first-child) {
+          margin-left: 0;
+        }
+
+        .column-title {
+          font-size: 0.4rem;
+          font-weight: 600;
+          text-transform: capitalize;
+          margin-bottom: 10px;
+          padding: 16px 0 0;
+          align-items: center
+        }
+      }
+    }
+  }
+
+}
+
+.button-container {
+  position: static;
+}
+
+.fixed-width-button {
+  white-space: nowrap;
+  width: -webkit-fill-available;
+}
+
+.task-container {
+  flex-grow: 1;
+  max-height: fit-content;
+  overflow-y: auto;
+  margin: -15px;
+}
+
+.task {
+  display: flex;
+  font-size: 14px;
+  position: relative;
+  background: white;
+  border-bottom: solid 1px #ddd;
+  padding: 0.8rem;
+  margin-bottom: 0.8rem;
+  border-radius: 0.4rem;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.51),
+    0 3px 14px 2px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+
+  .edit-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .edit-button {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    display: none;
+  }
+
+  .task:hover .edit-button {
+    display: block;
+  }
+}
+
+.if-task {
+  display: flex;
+  font-size: 14px;
+  position: relative;
+  background: white;
+  border-bottom: solid 1px #ddd;
+  padding: 0.55rem;
+  margin-bottom: 0.8rem;
+  border-radius: 0.4rem;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.51),
+    0 3px 14px 2px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+
+}
+
+.card-input {
+  border-radius: 0.3rem;
+  padding: 0.12rem;
+  width: -webkit-fill-available;
+  border-color: mediumvioletred;
+  background-color: transparent;
+}
+
+.title-input {
+  font-size: 1.2rem;
+  color: darkslategrey;
+  font-weight: 500;
+  border-radius: 0.3rem;
+  padding: 0.12rem 0;
+  width: 230px;
+  border-color: mediumvioletred;
+  background-color: transparent;
+  top: -3%;
+  position: relative;
+
+}
+
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 0.4rem;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.task-container .cdk-drop-list-dragging .task:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.btn-custom {
+  margin-right: 10px;
+  width: 240px;
+  justify-content: left;
+  border-radius: 0.4rem;
+  background-color: lightgray;
+  border: none;
+  opacity: 0.5;
+  height: 3rem;
+}
+
+.custom-input {
+  margin-right: 10px;
+  justify-content: left;
+  border-radius: 0.4rem;
+  background-color: lightgray;
+  border: none;
+  opacity: 0.5;
+  height: 3rem;
+}

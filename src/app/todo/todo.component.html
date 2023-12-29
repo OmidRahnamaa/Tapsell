@@ -1,0 +1,141 @@
+<div class="root">
+
+  <!-- Header with App Name and Add List Button -->
+  <mat-toolbar class="navbar bg-dark" color="primary">
+    <div class="navbar-brand" style="display: contents;">
+      <div class="navbar-item col-md-8">
+        <h1 class="app-name gradient-text">Angular Todo</h1>
+      </div>
+      <button mat-stroked-button class="btn-custom col-md-4" (click)="openDialog()">
+        <mat-icon>add</mat-icon> Add another list
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <!-- Board Container with Background Image -->
+  <div class="board" style="background-image: url('{{imagePath}}');">
+
+    <!-- Board Columns Container -->
+    <div class="board-wrapper">
+      <div class="row">
+        <div class="board-columns" cdkDropListGroup>
+  
+          <!-- To Do Column -->
+          <mat-card class="board-column col-md-4 col-sm-12" cdkDropList [cdkDropListData]="todo">
+            <mat-card-header class="column-title justify-content-between">
+              <mat-card-title>To Do</mat-card-title>
+              <button mat-mini-fab mat class="shadow-none bg-transparent" style="padding: 0;">
+                <mat-icon color="primary">more_horiz</mat-icon>
+              </button>
+            </mat-card-header>
+            <mat-card-content class="task-container my-1">
+              <!-- Task Items in To Do Column -->
+              <div class="task justify-content-between" *ngFor="let item of todo;let i = index" cdkDrag (mouseenter)="toggleEditButton(true, i)" (mouseleave)="toggleEditButton(false, i)" >
+                {{ item }}
+                <!-- Edit Button (shown on hover) -->
+                <button mat-icon-button *ngIf="showEditButton[i]" class="delete-button shadow-none" style="width: 20px; padding: 0; height: 20px;" [matMenuTriggerFor]="editMenu">
+                  <mat-icon color="primary" class="fs-6">edit</mat-icon>
+                </button>
+                <mat-menu color="accent" #editMenu="matMenu">
+                  <button mat-menu-item (click)="onEditClick(item)">
+                    <span>Edit Card</span>
+                  </button>
+                  <button mat-menu-item (click)="onDeleteClick(item)">
+                    <span>Delete Card</span>
+                  </button>
+                </mat-menu>
+              </div>
+              <!-- Toggle To Create New Card And Called A Title -->
+              <div *ngIf="addingCard" class="if-task">
+                <input matInput type="text" class="card-input" [(ngModel)]="newCardTitle" placeholder="Enter Card Title" (keyup.enter)="addCard('todo')"/>
+              </div>
+            </mat-card-content>
+            <!-- Add Card Button for To Do Column -->
+            <div class="button-container">
+              <div *ngIf="!addingCard">
+                <button mat-button color="primary" class="fixed-width-button shadow-none" (click)="startAddingCard()">
+                  <mat-icon>add</mat-icon>Add a Card
+                </button>
+              </div>
+            </div>
+            
+          </mat-card>
+  
+          <!-- Doing Column -->
+          <mat-card class="board-column col-md-4 col-sm-12" cdkDropList [cdkDropListData]="doing" (cdkDropListDropped)="drop($event)">
+            <mat-card-header class="column-title justify-content-between" style="width: -webkit-fill-available;">
+              <mat-card-title *ngIf="!editing" (click)="startEditing()"> {{ editedTitle }}</mat-card-title>
+              <ng-container *ngIf="editing">
+                <input matInput class="title-input" [(ngModel)]="editedTitle" (keyup.enter)="stopEditing()"/>
+              </ng-container>
+              
+              <button mat-mini-fab class="shadow-none bg-transparent" style="padding: 0;">
+                <mat-icon color="primary">more_horiz</mat-icon>
+              </button>
+            </mat-card-header>
+            <mat-card-content class="task-container my-1">
+              <!-- Task Items in Doing Column -->
+              <div class="task" *ngFor="let item of doing" cdkDrag>
+                {{ item }}
+              </div>
+            </mat-card-content>
+            <!-- Add Card Button for Doing Column -->
+            <div class="button-container">
+              <button mat-button color="primary" class="fixed-width-button shadow-none" (click)="addCard('doing')">
+                <mat-icon>add</mat-icon>Add a Card
+              </button>
+            </div>
+          </mat-card>
+  
+          <!-- Done Column -->
+          <mat-card class="board-column col-md-4 col-sm-12" cdkDropList [cdkDropListData]="done" (cdkDropListDropped)="drop($event)">
+            <mat-card-header class="column-title justify-content-between">
+              <mat-card-title>Done</mat-card-title>
+              <button mat-mini-fab class="shadow-none bg-transparent" style="padding: 0;">
+                <mat-icon color="primary">more_horiz</mat-icon>
+              </button>
+            </mat-card-header>
+            <mat-card-content class="task-container my-1">
+              <!-- Task Items in Done Column -->
+              <div class="task" *ngFor="let item of done" cdkDrag>
+                {{ item }}
+              </div>
+            </mat-card-content>
+            <!-- Add Card Button for Done Column -->
+            <div class="button-container">
+              <button mat-button color="primary" class="fixed-width-button shadow-none" (click)="addCard('done')">
+                <mat-icon>add</mat-icon>Add a Card
+              </button>
+            </div>
+          </mat-card>
+  
+          <!-- Custom List Column (conditionally shown) -->
+          <ng-container *ngIf="showCustomList">
+            <mat-card class="board-column col-md-4 col-sm-12" cdkDropList [cdkDropListData]="customList" (cdkDropListDropped)="drop($event)">
+              <mat-card-header class="column-title justify-content-between">
+                <mat-card-title>{{ customListTitle }}</mat-card-title>
+                <button mat-mini-fab class="shadow-none bg-transparent" style="padding: 0;">
+                  <mat-icon color="primary">more_horiz</mat-icon>
+                </button>
+              </mat-card-header>
+              <mat-card-content class="task-container my-1">
+                <!-- Task Items in Custom List Column -->
+                <div class="task" *ngFor="let item of customList" cdkDrag>
+                  {{ item }}
+                </div>
+              </mat-card-content>
+              <!-- Add Card Button for Custom List Column -->
+              <div class="button-container">
+                <button mat-button color="primary" class="fixed-width-button shadow-none"
+                  (click)="addCard('newCustomList')">
+                  <mat-icon>add</mat-icon>Add a Card
+                </button>
+              </div>
+            </mat-card>
+          </ng-container>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<h2 mat-dialog-title class="m-auto">Add Another List</h2>
+<mat-dialog-content class="m-auto">
+  <mat-form-field>
+    <input matInput color="primary" placeholder="Enter List Name" [(ngModel)]="newListName" />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button color="primary" (click)="onAddList()">Add List</button>
+</mat-dialog-actions>
